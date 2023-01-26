@@ -1,5 +1,5 @@
 #
-# Copyright 2016-2022, Cypress Semiconductor Corporation (an Infineon company) or
+# Copyright 2016-2023, Cypress Semiconductor Corporation (an Infineon company) or
 # an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 #
 # This software, including source code, documentation and related
@@ -99,20 +99,19 @@ endif
 #
 # pins supporting SWD hardware debugging
 #
-# SWD hardware debugging on this board requires fly-wire connections. Use P12 for SWDIO and P14 for SWDCK - first set SW8
-# switch to position 1, and then P12 / RSVD_3 can be used for SWDIO. And fly-wire P14 / ARD_D8 on J3.10 to J12.4 to connect
-# SWDCK on RSVD_4 on J12.4.
+# SWD hardware debugging on this board requires a fly-wire connection. Use P14 for SWDIO and P02 for SWDCK.
+# Add fly-wire P14 / ARD_D8 on J3.10 to J4.3 ARD_D5 to connect SWDIO. P02 already routes to SWDCK/ARD_D4.
 #
 # Optionally, P14 (ARD_D8) on J3.10 can be fly-wired either to J2.1 to access the thermistor on ARD_A0, or to J12.8 to access the ALS interrupt on RSVD_8
 # If that setup is desired, use Device Configurator to configure the fly-wired connection.
-
-CY_CORE_DEFINES+=-DCY_PLATFORM_SWDCK=WICED_P14
-CY_CORE_DEFINES+=-DCY_PLATFORM_SWDIO=WICED_P12
+#
+CY_CORE_DEFINES+=-DCY_PLATFORM_SWDCK=WICED_P02
+CY_CORE_DEFINES+=-DCY_PLATFORM_SWDIO=WICED_P14
 
 #
 # Patch variables
 #
-CY_CORE_PATCH=$(CY_INTERNAL_BASELIB_PATH)/internal/$(CY_TARGET_DEVICE)/patches/patch.elf
+CY_CORE_PATCH=$(CY_INTERNAL_BASELIB_PATH)/internal/$(CY_TARGET_DEVICE)/89820QFN_patches/patch.elf
 CY_CORE_PATCH_CFLAGS=$(CY_INTERNAL_BASELIB_PATH)/internal/$(CY_TARGET_DEVICE)/gcc/$(CY_TARGET_DEVICE).cflag
 CY_CORE_PATCH_LIB_PATH=libraries/prebuilt
 
@@ -124,7 +123,7 @@ CY_CORE_HCI_ID=$(CY_INTERNAL_BASELIB_PATH)/platforms/CYW208XXA1_IDFILE.txt
 CY_CORE_BTP=$(CY_INTERNAL_BASELIB_PATH)/platforms/208XX_OCF.btp
 CY_CORE_MINIDRIVER=$(CY_INTERNAL_BASELIB_PATH)/platforms/minidriver-$(CY_TARGET_DEVICE)-uart-patchram.hex
 CY_CORE_CGSLIST=\
-    $(CY_INTERNAL_BASELIB_PATH)/internal/$(CY_TARGET_DEVICE)/patches/patch.cgs\
+    $(CY_INTERNAL_BASELIB_PATH)/internal/$(CY_TARGET_DEVICE)/89820QFN_patches/patch.cgs\
     $(CY_INTERNAL_BASELIB_PATH)/platforms/CYW208XXA1.cgs
 
 #
